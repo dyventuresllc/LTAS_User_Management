@@ -23,25 +23,25 @@ namespace LTAS_User_Management
             var eddsDbContext = Helper.GetDBContext(-1);
             var ltasLogger = LoggerFactory.CreateLogger<LTASUserManagementAgent>(eddsDbContext, Helper, relativityLogger);
 
-            ltasLogger.LogInformation("Successfully connected to EDDS database");
+            //ltasLogger.LogInformation("Successfully connected to EDDS database");
 
-            string checkSQL = @"
-                    SELECT Message 
-                    FROM eddsdbo.Agent 
-                    WHERE Name LIKE 'LTAS Billing Management%'
-                    AND Message = 'Running'
-                    AND DATEDIFF(MINUTE, LastUpdate, GETDATE()) < 15";
+            //string checkSQL = @"
+            //        SELECT Message 
+            //        FROM eddsdbo.Agent 
+            //        WHERE Name LIKE 'LTAS Billing Management%'
+            //        AND Message = 'Running'
+            //        AND DATEDIFF(MINUTE, LastUpdate, GETDATE()) < 15";
 
-            var runningAgent = eddsDbContext.ExecuteSqlStatementAsScalar<string>(checkSQL);
-            ltasLogger.LogInformation($"Running agent check result: {runningAgent}");
+            //var runningAgent = eddsDbContext.ExecuteSqlStatementAsScalar<string>(checkSQL);
+            //ltasLogger.LogInformation($"Running agent check result: {runningAgent}");
 
-            if (runningAgent != null)
-            {
-                ltasLogger.LogInformation("Another LTAS agent is currently running. Exiting.");
-                return;
-            }
+            //if (runningAgent != null)
+            //{
+            //    ltasLogger.LogInformation("Another LTAS agent is currently running. Exiting.");
+            //    return;
+            //}
             
-            ltasLogger.LogInformation("No running agents found, continuing execution");
+            //ltasLogger.LogInformation("No running agents found, continuing execution");
             RaiseMessage("Starting LTAS User Management...", 10);
 
             try
@@ -107,7 +107,6 @@ namespace LTAS_User_Management
             }
         }
                
-
         public class JobHandler
         {
             private readonly IAPILog _logger;
